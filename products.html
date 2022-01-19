@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Product</title>
+    <script src="https://unpkg.com/tailwindcss-jit-cdn" defer></script>
+    <script src="https://unpkg.com/vue@next" defer></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"
+      defer
+    ></script>
+    <script src="products.js" defer></script>
+  </head>
+  <body>
+    <div id="app" class="container lg:flex">
+      <section class="m-3 xl:w-4/12 lg:w-5/12">
+        <h2 class="mb-3 text-2xl font-extrabold">產品列表</h2>
+        <table class="table-auto">
+          <thead>
+            <tr class="border-b-2 border-black">
+              <th>產品名稱</th>
+              <th>原價</th>
+              <th>售價</th>
+              <th>是否啟用</th>
+              <th>查看細節</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="( product,index ) in products" :key="product.id">
+              <td class="p-4">{{ product.title }}</td>
+              <td class="p-4">{{ product.origin_price }}</td>
+              <td class="p-4">{{ product.price }}</td>
+              <td
+                class="p-4"
+                :class="{ 'text-red-500':product.is_enabled===0 } "
+              >
+                {{ product.is_enabled ===0 ? "未啟用" : "啟用"}}
+              </td>
+              <td>
+                <button
+                  type="button"
+                  class="p-2 text-white bg-blue-400 rounded hover:bg-blue-700 active:bg-black"
+                  @click="productView(index)"
+                >
+                  查看細節
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <p>
+          目前有
+          <span> {{ Object.entries(products).length }} </span>
+          項產品
+        </p>
+      </section>
+      <section class="m-3 mt-6 xl:w-7/12 lg:w-6/12">
+        <h2 class="mb-3 text-2xl font-extrabold">單一產品細節</h2>
+        <p class="mb-2 text-sm" v-if="index === null">請選擇一個商品查看</p>
+        <div v-else>
+          <div class="p-3 mb-3 border border-2 border-blue-400 rounded">
+            <img
+              :src="productDetail.imageUrl"
+              alt="商品主圖"
+              class="h-[300px] mx-auto mb-3"
+            />
+            <h3 class="flex items-center mb-3">
+              <span class="mr-2 text-xl"> {{ productDetail.title }}</span>
+              <span class="p-1 text-sm text-white bg-blue-400 rounded h-max">
+                {{ productDetail.category}}</span
+              >
+            </h3>
+            <p class="mb-1">商品描述：{{ productDetail.description }}</p>
+            <p class="mb-3">商品內容：{{ productDetail.content }}</p>
+            <div class="flex items-center gap-3 mb-3">
+              <p>
+                原價：
+                <span class="line-through"
+                  >{{ productDetail.origin_price }}
+                </span>
+                / 元
+              </p>
+              <p class="text-lg text-red-600">
+                特價：{{ productDetail.price}} / 元
+              </p>
+              <p>- {{ productDetail.unit}}</p>
+            </div>
+          </div>
+          <ul class="flex">
+            <li v-for="img in productDetail.imagesUrl" class="mr-2">
+              <img :src="img" alt="商品詳情圖" class="h-[150px]" />
+            </li>
+          </ul>
+        </div>
+      </section>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Auth</title>
+    <script src="https://unpkg.com/tailwindcss-jit-cdn" defer></script>
+    <script src="https://unpkg.com/vue@next" defer></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"
+      defer
+    ></script>
+    <script src="auth.js" defer></script>
+  </head>
+  <body>
+    <div id="app">
+      <div class="bg-[#F8F8FB] h-screen flex justify-center items-center p-3">
+        <section class="container max-w-[540px]">
+          <h1 class="mb-6 text-4xl font-bold text-center">Log in</h1>
+          <form action="" @submit.prevent="submitForm">
+            <p v-show="email.isValue" class="mb-1 text-red-400">請輸入 Email</p>
+            <input
+              type="email"
+              placeholder="Enter email"
+              class="block w-full px-3 py-4 mb-3 bg-gray-200 border-2 border-gray-400 rounded-lg"
+              :class="{ 'border-red-300': email.isValue }"
+              v-model="email.value"
+              @blur="email.isValue = false"
+            />
+            <p v-show="password.isValue" class="mb-1 text-red-400">
+              請輸入密碼
+            </p>
+            <input
+              type="password"
+              placeholder="Enter password"
+              class="block w-full px-3 py-4 mb-3 bg-gray-200 border-2 border-gray-400 rounded-lg"
+              :class="{ 'border-red-300': password.isValue }"
+              v-model="password.value"
+              @blur="password.isValue = false"
+            />
+            <button
+              class="w-full py-4 text-white bg-indigo-800 rounded-lg hover:bg-indigo-600 active:bg-blue-700"
+            >
+              Log in
+            </button>
+          </form>
+        </section>
+      </div>
+    </div>
+  </body>
+</html>
