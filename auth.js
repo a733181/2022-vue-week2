@@ -36,7 +36,7 @@ const app = Vue.createApp({
           window.location = 'products.html';
         })
         .catch((error) => {
-          alert(error.response.data);
+          alert(error.response.data.message);
         });
     },
   },

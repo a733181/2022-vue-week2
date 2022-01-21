@@ -16,7 +16,9 @@ const app = Vue.createApp({
     checkLogin() {
       axios
         .post(`${this.url}user/check`)
-        .then(() => {})
+        .then(() => {
+          this.getProductsData();
+        })
         .catch(() => {
           window.location = 'index.html';
         });
@@ -29,7 +31,7 @@ const app = Vue.createApp({
           this.products = products;
         })
         .catch((error) => {
-          alert(error.response.data);
+          alert(error.response.data.message);
         });
     },
     productView(index) {
@@ -43,7 +45,6 @@ const app = Vue.createApp({
     );
     axios.defaults.headers.common.Authorization = cookieToken;
     this.checkLogin();
-    this.getProductsData();
   },
 });
 
